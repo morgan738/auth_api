@@ -29,9 +29,9 @@ const init = async()=> {
         username VARCHAR(100) NOT NULL,
         password VARCHAR(200) NOT NULL
       );
-      INSERT INTO users (name, password) VALUES('morgan', '1234');
-      INSERT INTO users (name, password) VALUES('dylan', 'dDawg');
-      INSERT INTO users (name,password ) VALUES('cathy', 'cat456');
+      INSERT INTO users (username, password) VALUES('morgan', '1234');
+      INSERT INTO users (username, password) VALUES('dylan', 'dDawg');
+      INSERT INTO users (username,password ) VALUES('cathy', 'cat456');
     `;
 
     await client.query(SQL);
