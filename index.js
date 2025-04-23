@@ -8,7 +8,7 @@ app.use(require('cors')());
 
 //app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '../public/index.html')));
 
-const{client} = require('./db')
+const{client, createUser} = require('./db')
 
 
 app.use('/api', require('./api'));
@@ -35,6 +35,13 @@ const init = async()=> {
     `;
 
     await client.query(SQL);
+
+    const [morgan, parker, dylan, devin] = await Promise.all([
+        createUser({username: 'morgan', password: '1234'}),
+        createUser({username: 'parker', password: 'parkerPass'}),
+        createUser({username: 'dylan', password: 'dDawg'}),
+        createUser({username: 'devin', password: 'devster'}),
+    ])
   }
   catch(ex){
     console.log(ex);
