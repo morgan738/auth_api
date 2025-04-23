@@ -2,7 +2,8 @@ const express = require('express');
 const app = express.Router();
 const {
     authenticate,
-    findUserByToken
+    findUserByToken,
+    getAllUsers
 } = require('./db');
 
 const isLoggedIn = async(req,res,next) => {
@@ -15,6 +16,14 @@ const isLoggedIn = async(req,res,next) => {
       next(error)
     }
 }
+
+app.get('/users', async(req,res,next) => {
+    try {
+        res.send(await getAllUsers());
+    } catch (error) {
+        next(error)
+    }
+})
 
 app.post('/login', async(req,res,next) => {
     try {

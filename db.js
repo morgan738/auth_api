@@ -1,3 +1,15 @@
+const pg = require('pg');
+const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost/auth_api');
+
+const getAllUsers = async() => {
+    const SQL = `
+        SELECT *
+        FROM users
+    `
+    const response = await client.query(SQL);
+    return response.rows;
+}
+
 const findUserByToken = async(token) => {
     try {
       const payload = await jwt.verify(token, process.env.JWT)
@@ -43,7 +55,8 @@ const authenticate = async(credentials) => {
   
   }
   module.exports = {
-    
+    client,
     authenticate,
     findUserByToken,
+    getAllUsers
   };

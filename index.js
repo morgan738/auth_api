@@ -1,15 +1,15 @@
 const express = require('express');
-const pg = require('pg');
-const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost/auth_api');
+//const pg = require('pg');
+//const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost/auth_api');
 const path = require('path');
 const app = express();
 app.use(express.json());
 app.use(require('cors')());
 
-app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '../public/index.html')));
+//app.get('/', (req, res)=> res.sendFile(path.join(__dirname, '../public/index.html')));
 
-app.use('/dist', express.static(path.join(__dirname, '../dist')));
-app.use('/public', express.static(path.join(__dirname, '../public')));
+const{client} = require('./db')
+
 
 app.use('/api', require('./api'));
 
