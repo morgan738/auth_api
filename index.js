@@ -23,8 +23,7 @@ const init = async()=> {
       console.log(`listening on port ${PORT}`);
     });
     const SQL = `
-        DROP TABLE *;
-      DROP TABLE IF EXISTS users;
+      DROP TABLE IF EXISTS users CASCADE;
       CREATE TABLE users(
         id UUID PRIMARY KEY,
         username VARCHAR(100) NOT NULL,
