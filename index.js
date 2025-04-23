@@ -31,7 +31,7 @@ const init = async()=> {
       );
       INSERT INTO users (name, password) VALUES('morgan', '1234');
       INSERT INTO users (name, password) VALUES('dylan', 'dDawg');
-      INSERT INTO users (name,password ) VALUES('cathy', ''cat456);
+      INSERT INTO users (name,password ) VALUES('cathy', 'cat456');
     `;
 
     await client.query(SQL);
