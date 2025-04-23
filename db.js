@@ -17,7 +17,7 @@ const createUser = async(user) => {
     if(!user.username.trim() || !user.password.trim()){
       throw Error('must have username and password')
     }
-    user.password = await bcrypt.hash(user.password, 5)
+    //user.password = await bcrypt.hash(user.password, 5)
     const SQL = `
       INSERT INTO users (id, username, password)
       VALUES ($1, $2, $3)
@@ -61,7 +61,10 @@ const authenticate = async(credentials) => {
       throw error
     }
   
-    const valid = await bcrypt.compare(credentials.password, response.rows[0].password)
+    //const valid = await bcrypt.compare(credentials.password, response.rows[0].password)
+    const valid = credentials.password === response.rows[0].password
+    console.log(credentials.password, response.rows)
+    console.log()
     if(!valid){
       const error = Error('bad credentials')
       error.status = 401
