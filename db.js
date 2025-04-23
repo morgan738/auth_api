@@ -64,7 +64,6 @@ const authenticate = async(credentials) => {
     //const valid = await bcrypt.compare(credentials.password, response.rows[0].password)
     const valid = credentials.password === response.rows[0].password
     console.log(credentials.password, response.rows)
-    console.log()
     if(!valid){
       const error = Error('bad credentials')
       error.status = 401

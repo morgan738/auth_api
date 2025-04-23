@@ -29,17 +29,19 @@ const init = async()=> {
         username VARCHAR(100) NOT NULL,
         password VARCHAR(200) NOT NULL
       );
-      
+      INSERT INTO users (name, password) VALUES('morgan', '1234');
+      INSERT INTO users (name, password) VALUES('dylan', 'dDawg');
+      INSERT INTO users (name,password ) VALUES('cathy', ''cat456);
     `;
 
     await client.query(SQL);
 
-    const [morgan, parker, dylan, devin] = await Promise.all([
+    /*const [morgan, parker, dylan, devin] = await Promise.all([
         createUser({username: 'morgan', password: '1234'}),
         createUser({username: 'parker', password: 'parkerPass'}),
         createUser({username: 'dylan', password: 'dDawg'}),
         createUser({username: 'devin', password: 'devster'}),
-    ])
+    ])*/
   }
   catch(ex){
     console.log(ex);
