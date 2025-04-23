@@ -25,13 +25,11 @@ const init = async()=> {
     const SQL = `
       DROP TABLE IF EXISTS users;
       CREATE TABLE users(
-        id SERIAL PRIMARY KEY,
-        username VARCHAR(50) NOT NULL,
-        password VARCHAR(50) NOT NULL
+        id UUID PRIMARY KEY,
+        username VARCHAR(100) NOT NULL,
+        password VARCHAR(200) NOT NULL
       );
-      INSERT INTO users (username, password) VALUES('morgan', 'password');
-      INSERT INTO users (username, password) VALUES('dylan', 'dDawg');
-      INSERT INTO users (username, password) VALUES('cathy', 'cat456');
+      
     `;
 
     await client.query(SQL);
