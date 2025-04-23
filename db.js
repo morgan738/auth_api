@@ -75,5 +75,6 @@ const authenticate = async(credentials) => {
     client,
     authenticate,
     findUserByToken,
-    getAllUsers
+    getAllUsers,
+    createUser
   };
