@@ -1,4 +1,8 @@
 const pg = require('pg');
+const bcrypt = require('bcrypt')
+const { v4 } = require('uuid');
+const uuidv4 = v4;
+const jwt = require('jsonwebtoken')
 const client = new pg.Client(process.env.DATABASE_URL || 'postgres://localhost/auth_api');
 
 const getAllUsers = async() => {
