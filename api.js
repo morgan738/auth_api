@@ -3,7 +3,12 @@ const app = express.Router();
 const {
     authenticate,
     findUserByToken,
-    getAllUsers
+    getAllUsers,
+    getAllGames,
+    getSingleGame,
+    addNewGame,
+    deleteGame, 
+    updateGame
 } = require('./db');
 
 const isLoggedIn = async(req,res,next) => {
@@ -40,6 +45,46 @@ app.get('/me', isLoggedIn, async (req,res,next) => {
     } catch (error) {
       next(error)
     }
+})
+
+app.get('/games', async (req,res,next) => {
+  try {
+    res.send(await getAllGames());
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/games/:id', async(req,res,next) => {
+  try {
+    res.send(await getSingleGame(req.params.id))
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.post('/games', async(req,res,next) => {
+  try {
+    res.send(await addNewGame(req.body))
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.delete('/games/:id', async(req,res,next) => {
+  try {
+    res.send(await deleteGame(req.params.id))
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.put('/games/:id', async(req,res,next) => {
+  try {
+    res.send(await updateGame(req.body, req.params.id*1))
+  } catch (error) {
+    next(error)
+  }
 })
 
 

@@ -73,10 +73,68 @@ const authenticate = async(credentials) => {
     return jwt.sign({id: response.rows[0].id}, process.env.JWT)
   
   }
+
+  const getAllGames = async () => {
+    const SQL = `
+        SELECT *
+        FROM games
+    `
+    const response = await client.query(SQL);
+    return response.rows;
+  }
+
+  const getSingleGame = async (id) => {
+    const SQL = `
+        SELECT *
+        FROM games
+        WHERE id = $1
+    `
+    const response = await client.query(SQL,[id]);
+    return response.rows[0];
+  }
+
+  const addNewGame = async (newGame) => {
+    const SQL = `
+        INSERT INTO games(name, description, price, image, rating)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *
+    `
+    const response = await client.query(SQL,[newGame.name, newGame.description, newGame.price, newGame.image, newGame.rating]);
+    return response.rows[0];
+  }
+
+  const deleteGame = async (id) => {
+    const SQL = `
+        DELETE
+        FROM games
+        WHERE id = $1
+    `
+    const response = await client.query(SQL,[id]);
+    return response; 
+  }
+
+  const updateGame = async (game, id) => {
+    console.log(game)
+    const SQL = `
+        UPDATE games
+        SET name = $1, description = $2, price = $3, image = $4, rating = $5
+        WHERE id = $6
+        RETURNING *
+    `
+    const response = await client.query(SQL,[game.name, game.description, game.price, game.image, game.rating, id]);
+    console.log(response)
+    return response.rows[0]; 
+  }
+  
   module.exports = {
     client,
     authenticate,
     findUserByToken,
     getAllUsers,
-    createUser
+    createUser,
+    getAllGames,
+    getSingleGame,
+    addNewGame,
+    deleteGame,
+    updateGame
   };
