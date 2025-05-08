@@ -8,7 +8,11 @@ const {
     getSingleGame,
     addNewGame,
     deleteGame, 
-    updateGame
+    updateGame,
+    createUser,
+    createFavorite,
+    fetchFavorites,
+    deleteFavorite
 } = require('./db');
 
 const isLoggedIn = async(req,res,next) => {
@@ -37,6 +41,15 @@ app.post('/login', async(req,res,next) => {
     } catch (error) {
       next(error)
     }
+})
+
+app.post('/users', async (req,res,next) => {
+  try {
+    const response = await createUser(req.body)
+    res.send(response)
+  } catch (error) {
+    next(error)
+  }
 })
 
 app.get('/me', isLoggedIn, async (req,res,next) => {
@@ -87,5 +100,32 @@ app.put('/games/:id', async(req,res,next) => {
   }
 })
 
+app.get('/favorites', isLoggedIn, async(req, res, next)=> {
+  try {
+    res.send(await fetchFavorites(req.user.id));
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
+app.post('/favorites', isLoggedIn, async(req, res, next)=> {
+  try {
+    res.send(await createFavorite({user_id: req.user.id, product_id: req.body.product_id }));
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
+app.delete('/favorites/:id', isLoggedIn, async(req, res, next)=> {
+  try {
+    await deleteFavorite({ id: req.params.id, user_id: req.user.id});
+    res.sendStatus(201);
+  }
+  catch(ex){
+    next(ex);
+  }
+});
 
 module.exports = app;
