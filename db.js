@@ -128,10 +128,22 @@ const authenticate = async(credentials) => {
   }
 
   const createFavorite = async(favorite)=> {
-    const SQL = `
+    /* const SQL = `
     INSERT INTO favorites (games_id, user_id, fav_id) VALUES($1, $2, $3) RETURNING *
-  `;
-   response = await client.query(SQL, [ favorite.games_id, favorite.user_id, uuidv4()]);
+  `; */
+    const SQL = `
+      WITH cte AS
+        (
+            INSERT INTO favorites (fav_id, games_id, user_id)
+            VALUES ($1 ,$2, $3)
+            RETURNING *
+        )
+      SELECT cte.fav_id, games.* 
+      FROM cte
+      JOIN games
+      ON cte.games_id = games.id
+    `
+   response = await client.query(SQL, [ uuidv4(), favorite.games_id, favorite.user_id]);
     return response.rows[0];
   };
 

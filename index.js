@@ -128,6 +128,7 @@ const init = async()=> {
     if(process.env.SYNC){
       await seedDb()
     }
+    
   }
   catch(ex){
     console.log(ex);
