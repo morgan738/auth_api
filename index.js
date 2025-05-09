@@ -35,7 +35,7 @@ const seedDb = async () => {
         
         DROP TABLE IF EXISTS favorites CASCADE;
         CREATE TABLE favorites(
-          id UUID PRIMARY KEY,
+          fav_id UUID PRIMARY KEY,
           games_id INTEGER REFERENCES games(id) NOT NULL,
           user_id UUID REFERENCES users(id) NOT NULL,
           CONSTRAINT games_and_user_key UNIQUE(games_id, user_id)

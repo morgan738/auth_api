@@ -120,7 +120,7 @@ app.post('/favorites', isLoggedIn, async(req, res, next)=> {
 
 app.delete('/favorites/:id', isLoggedIn, async(req, res, next)=> {
   try {
-    await deleteFavorite({ id: req.params.id, user_id: req.user.id});
+    await deleteFavorite({ fav_id: req.params.id, user_id: req.user.id});
     res.sendStatus(201);
   }
   catch(ex){

@@ -129,7 +129,7 @@ const authenticate = async(credentials) => {
 
   const createFavorite = async(favorite)=> {
     const SQL = `
-    INSERT INTO favorites (games_id, user_id, id) VALUES($1, $2, $3) RETURNING *
+    INSERT INTO favorites (games_id, user_id, fav_id) VALUES($1, $2, $3) RETURNING *
   `;
    response = await client.query(SQL, [ favorite.games_id, favorite.user_id, uuidv4()]);
     return response.rows[0];
@@ -138,16 +138,19 @@ const authenticate = async(credentials) => {
   const deleteFavorite = async(favorite)=> {
     const SQL = `
       DELETE from favorites 
-      WHERE id = $1 AND user_id = $2
+      WHERE fav_id = $1 AND user_id = $2
     `;
-    await client.query(SQL, [favorite.id, favorite.user_id]);
+    await client.query(SQL, [favorite.fav_id, favorite.user_id]);
   };
 
   const fetchFavorites = async(userId)=> {
+    
     const SQL = `
-      SELECT * FROM favorites
+      SELECT favorites.fav_id, games.* FROM favorites
+      INNER JOIN games ON favorites.games_id = games.id
       WHERE user_id = $1
-    `;
+
+    `
     const response = await client.query(SQL, [ userId ]);
     console.log(response)
     return response.rows;
