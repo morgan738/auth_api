@@ -111,7 +111,7 @@ app.get('/favorites', isLoggedIn, async(req, res, next)=> {
 
 app.post('/favorites', isLoggedIn, async(req, res, next)=> {
   try {
-    res.send(await createFavorite({user_id: req.user.id, product_id: req.body.product_id }));
+    res.send(await createFavorite({user_id: req.user.id, games_id: req.body.games_id }));
   }
   catch(ex){
     next(ex);
