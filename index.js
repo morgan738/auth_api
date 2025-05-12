@@ -125,7 +125,7 @@ const init = async()=> {
     //   createFavorite({ user_id: morgan.id, games_id: 2 }),
     //   createFavorite({ user_id: dylan.id, games_id: 1 })
     // ]);
-    if(process.env.SYNC){
+    if(process.env.SYNC === true){
       await seedDb()
     }
     
