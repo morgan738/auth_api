@@ -51,16 +51,16 @@ const seedDb = async () => {
 
     await client.query(SQL);
 
-    const [morgan, parker, dylan, devin] = await Promise.all([
+    const [morgan, nancy, david, katie] = await Promise.all([
         createUser({username: 'morgan', password: '1234'}),
-        createUser({username: 'parker', password: 'parkerPass'}),
-        createUser({username: 'dylan', password: 'dDawg'}),
-        createUser({username: 'devin', password: 'devster'}),
+        createUser({username: 'nancy', password: 'nancyPass'}),
+        createUser({username: 'david', password: 'dDawg'}),
+        createUser({username: 'katie', password: 'katester'}),
     ])
     await Promise.all([
       createFavorite({ user_id: morgan.id, games_id: 1 }),
       createFavorite({ user_id: morgan.id, games_id: 2 }),
-      createFavorite({ user_id: dylan.id, games_id: 1 })
+      createFavorite({ user_id: nancy.id, games_id: 1 })
     ]);
     console.log("finished seeding db")
 }
