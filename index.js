@@ -61,25 +61,19 @@ const seedDb = async () => {
     createFavorite({ user_id: morgan.id, games_id: 2 }),
     createFavorite({ user_id: ethel.id, games_id: 1 }),
   ]); */
+
+  const morgan = await createUser({ username: "morgan", password: "1234" });
+  const ethel = await createUser({ username: "ethel", password: "ethelPass" });
+  await createUser({ username: "david", password: "dDawg" });
+  await createUser({ username: "katie", password: "katester" });
+
+  await createFavorite({ user_id: morgan.id, games_id: 1 });
+  await createFavorite({ user_id: morgan.id, games_id: 2 });
+  await createFavorite({ user_id: ethel.id, games_id: 1 });
+
   console.log("finished seeding db");
 };
 
-const seedUsers = async () => {
-  const [morgan, ethel, david, katie] = await Promise.all([
-    createUser({ username: "morgan", password: "1234" }),
-    createUser({ username: "ethel", password: "ethelPass" }),
-    createUser({ username: "david", password: "dDawg" }),
-    createUser({ username: "katie", password: "katester" }),
-  ]);
-};
-
-const seedUserFavs = async () => {
-  await Promise.all([
-    createFavorite({ user_id: morgan.id, games_id: 1 }),
-    createFavorite({ user_id: morgan.id, games_id: 2 }),
-    createFavorite({ user_id: ethel.id, games_id: 1 }),
-  ]);
-};
 const PORT = process.env.PORT || 3000;
 
 const init = async () => {
@@ -91,8 +85,6 @@ const init = async () => {
 
     if (process.env.SYNC === "true") {
       await seedDb();
-      await seedUsers();
-      await seedUserFavs();
     }
   } catch (ex) {
     console.log(ex);
