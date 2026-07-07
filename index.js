@@ -18,7 +18,8 @@ const seedDb = async () => {
       CREATE TABLE users(
         id UUID PRIMARY KEY,
         username VARCHAR(100) NOT NULL,
-        password VARCHAR(200) NOT NULL
+        password VARCHAR(200) NOT NULL,
+        is_admin BOOLEAN DEFAULT false NOT NULL
       );
 
       
@@ -62,10 +63,10 @@ const seedDb = async () => {
     createFavorite({ user_id: ethel.id, games_id: 1 }),
   ]); */
 
-  const morgan = await createUser({ username: "morgan", password: "1234" });
-  const ethel = await createUser({ username: "ethel", password: "ethelPass" });
-  await createUser({ username: "david", password: "dDawg" });
-  await createUser({ username: "katie", password: "katester" });
+  const morgan = await createUser({ username: "morgan", password: "1234", is_admin: true });
+  const ethel = await createUser({ username: "ethel", password: "ethelPass", is_admin: false });
+  await createUser({ username: "david", password: "dDawg", is_admin: false });
+  await createUser({ username: "katie", password: "katester", is_admin: false });
 
   await createFavorite({ user_id: morgan.id, games_id: 1 });
   await createFavorite({ user_id: morgan.id, games_id: 2 });

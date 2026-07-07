@@ -26,6 +26,16 @@ const isLoggedIn = async (req, res, next) => {
   }
 };
 
+const isAdmin = async (req, res, next) => {
+  if (req.user.is_admin) {
+    next();
+  } else {
+    const err = new Error("must be admin");
+    err.status = 401;
+    next(err);
+  }
+};
+
 app.get("/users", async (req, res, next) => {
   try {
     res.send(await getAllUsers());
@@ -76,7 +86,7 @@ app.get("/games/:id", async (req, res, next) => {
   }
 });
 
-app.post("/games", isLoggedIn, async (req, res, next) => {
+app.post("/games", isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     res.send(await addNewGame(req.body));
   } catch (error) {
@@ -84,7 +94,7 @@ app.post("/games", isLoggedIn, async (req, res, next) => {
   }
 });
 
-app.delete("/games/:id", isLoggedIn, async (req, res, next) => {
+app.delete("/games/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     res.send(await deleteGame(req.params.id));
   } catch (error) {
@@ -92,7 +102,7 @@ app.delete("/games/:id", isLoggedIn, async (req, res, next) => {
   }
 });
 
-app.put("/games/:id", async (req, res, next) => {
+app.put("/games/:id", isLoggedIn, isAdmin, async (req, res, next) => {
   try {
     res.send(await updateGame(req.body, req.params.id * 1));
   } catch (error) {
@@ -114,7 +124,7 @@ app.post("/favorites", isLoggedIn, async (req, res, next) => {
       await createFavorite({
         user_id: req.user.id,
         games_id: req.body.games_id,
-      })
+      }),
     );
   } catch (ex) {
     next(ex);
