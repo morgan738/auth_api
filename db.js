@@ -155,7 +155,7 @@ const createFavorite = async (favorite) => {
       JOIN games
       ON cte.games_id = games.id
     `;
-  response = await client.query(SQL, [uuidv4(), favorite.games_id, favorite.user_id]);
+  const response = await client.query(SQL, [uuidv4(), favorite.games_id, favorite.user_id]);
   return response.rows[0];
 };
 
